@@ -10,7 +10,7 @@ app.set("view engine", "handlebars");
 app.set("views", __dirname + "/views");
 
 app.get("/", (req, res) => {
-	res.render("home", { title: "어서오세요!", message: "Mongoose를 사용한 게시판 입니다."});
+	res.render("home", { title: "게시판 테스트중입니다!", message: "Mongoose를 사용한 게시판 입니다."});
 });
 
 app.listen(3000);

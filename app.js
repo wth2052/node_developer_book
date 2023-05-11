@@ -10,10 +10,22 @@ app.set("view engine", "handlebars");
 app.set("views", __dirname + "/views");
 
 app.get("/", (req, res) => {
-	res.render("home", { title: "게시판 테스트중입니다!", message: "Mongoose를 사용한 게시판 입니다."});
+	res.render("home", {
+		title: "게시판 테스트중입니다!", message: "Mongoose를 사용한 게시판 입니다."
+	});
 });
 
 app.get("/write", (req, res) => {
-	res.render("write", { title: "테스트 게시판 글쓰기"});
+	res.render("write", {
+		title: "테스트 게시판 글쓰기"
+
+	});
 })
+
+app.get("/detail/:id", (req, res) => {
+	res.render("detail", {
+		title: "테스트 게시판"
+	});
+});
+
 app.listen(3000);

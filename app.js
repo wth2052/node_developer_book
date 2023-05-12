@@ -2,8 +2,19 @@ const express = require("express");
 const handlebars = require("express-handlebars");
 const app = express();
 
+const mongodbConnect = require('./configs/mongodb-connection');
+
+//저 mongodb-connection에서 쓴 익명함수가 리턴된다. (당연한소리..)
+console.log("몽고쓰",mongodbConnect);
+
+let collection;
+
 //handlebars를 템플릿 엔진으로 등록
-app.engine("handlebars", handlebars.engine());
+app.engine("handlebars",
+	handlebars.create({
+		helpers: require("./configs/handlebars-helpers"),
+	}).engine,
+	);
 //웹페이지 로드 시 사용할 템플릿 엔진 설정
 app.set("view engine", "handlebars");
 //뷰 디렉터리를 views로 설정
@@ -28,4 +39,9 @@ app.get("/detail/:id", (req, res) => {
 	});
 });
 
-app.listen(3000);
+app.listen(3000, async () => {
+	console.log("Server is running on port 3000");
+	const mongoClient = await mongodbConnect();
+	collection = mongoClient.db().collection("post");
+	console.log("디비에 연결되었습니다.");
+})

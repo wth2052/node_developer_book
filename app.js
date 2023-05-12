@@ -28,12 +28,22 @@ app.get("/", (req, res) => {
 	});
 });
 
+//글쓰기
 app.get("/write", (req, res) => {
 	res.render("write", {
 		title: "테스트 게시판 글쓰기"
 
 	});
 })
+
+app.post("/write", async (req, res) => {
+	const post = req.body;
+	//결과
+	const result = postService.writePost(collection, post);
+	//생성된 도큐먼트의 _id를 사용해 상세페이지로 이동
+	res.redirect(`/detail/${result.insertedId}`);
+});
+
 
 app.get("/detail/:id", (req, res) => {
 	res.render("detail", {

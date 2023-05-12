@@ -9,6 +9,8 @@ console.log("몽고쓰",mongodbConnect);
 
 let collection;
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 //handlebars를 템플릿 엔진으로 등록
 app.engine("handlebars",
 	handlebars.create({

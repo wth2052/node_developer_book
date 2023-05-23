@@ -51,6 +51,19 @@ app.get("/detail/:id", (req, res) => {
 	});
 });
 
+app.get("/", async (req, res) => {
+	const page = parseInt(req.query.page) || 1; // 현재 페이지
+	const search = req.query.search || ""; // 검색어
+	try {
+		//postService에서 글 목록, 페이지네이터를 가져옴
+		const [posts, paginator] = await postService.list(collection, page, search);
+		res.render("home", {title: "테스트 게시판", search, paginator, posts});
+	}catch (error) {
+		console.log(error);
+		res.render("home", {title: "테스트 게시판", error});
+	}
+})
+
 app.listen(3000, async () => {
 	console.log("Server is running on port 3000");
 	const mongoClient = await mongodbConnect();
